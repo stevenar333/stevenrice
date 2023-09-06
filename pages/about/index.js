@@ -1,20 +1,7 @@
 // icons
-import {
-  FaHtml5,
-  FaCss3,
-  FaJs,
-  FaReact,
-  FaWordpress,
-  FaFigma,
-} from "react-icons/fa";
+import {FaHtml5, FaCss3, FaJs, FaReact, FaWordpress, FaFigma} from 'react-icons/fa'
 
-import {
-  SiNextdotjs,
-  SiFramer,
-  SiAdobexd,
-  SiAdobephotoshop,
-} from "react-icons/si";
-
+import {SiNextdotjs, SiFramer, SiAdobexd, SiAdobephotoshop} from 'react-icons/si'
 
 //  data
 const aboutData = [
@@ -24,18 +11,18 @@ const aboutData = [
       {
         title: 'Web Development',
         icons: [
-          <FaHtml5 />,
-          <FaCss3 />,
-          <FaJs />,
-          <FaReact />,
-          <SiNextdotjs />,
-          <SiFramer />,
-          <FaWordpress />,
+          <FaHtml5 key={1} />,
+          <FaCss3 key={2} />,
+          <FaJs key={3} />,
+          <FaReact key={4} />,
+          <SiNextdotjs key={5} />,
+          <SiFramer key={6} />,
+          <FaWordpress key={7} />,
         ],
       },
       {
         title: 'UI/UX Design',
-        icons: [<FaFigma />, <SiAdobexd />, <SiAdobephotoshop />],
+        icons: [<FaFigma key={8} />, <SiAdobexd key={9} />, <SiAdobephotoshop key={10} />],
       },
     ],
   },
@@ -86,10 +73,53 @@ const aboutData = [
       },
     ],
   },
-];
+]
+
+import Avatar from '../../components/Avatar'
+import Circles from '../../components/Circles'
+import {useState} from 'react'
+
+import {motion} from 'framer-motion'
+import {fadeIn} from '../../variants'
 
 const About = () => {
-  return <div>About</div>;
-};
+  const [index, setIndex] = useState()
+  return (
+    <div className="h-full bg-primary/30 py-32 text-center xl:text-left">
+      <Circles />
+      {/* avatar img */}
+      <motion.div
+        variants={fadeIn('right', 0.2)}
+        initial="hidden"
+        animate="show"
+        exit="hidden"
+        className="hidden xl:flex absolute bottom-0 -left-[370px]"
+      >
+        <Avatar />
+      </motion.div>
+      <div className="container mx-auto h-full flex flex-col items-center xl:flex-row gap-x-6">
+        <div>text</div>
+        <div>
+          <div className="flex gap-x-4 xl:gap-x-8 mx-auto xl:mx-0 mb-4">
+            {aboutData.map((item, itemIndex) => {
+              return (
+                <div
+                  key={itemIndex}
+                  className={`${
+                    index === itemIndex &&
+                    'text-accent after:w-[100%] after:bg-accent after:transition-all after:duration-300 '
+                  } cursor-pointer capitalize xl:text-lg relative after:w-8 after:h-[2px] after:bg-white after:absolute after:-bottom-1 after:left-0`}
+                  onClick={() => setIndex(itemIndex)}
+                >
+                  {item.title}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
-export default About;
+export default About
